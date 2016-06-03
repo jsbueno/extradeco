@@ -17,7 +17,7 @@ def parametrized(flat_decorator):
         raise TypeError("Decorators must have a mandatory first parameter that accepts the decorated object")
     var_positional_found = False
     var_keyword_found = False
-    for name, parameter in reversed(sig.parameters.items()):
+    for name, parameter in reversed(list(sig.parameters.items())):
         var_positional_found |= parameter.kind is P.VAR_POSITIONAL
         var_keyword_found |= parameter.kind is P.VAR_POSITIONAL
         if var_positional_found and var_keyword_found: break
