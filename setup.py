@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'extradeco',
-    py_modules = ["extradeco"]
+    py_modules = ["extradeco"],
     version = "0.1.0",
     license = "LGPLv3+",
     author = "João S. O. Bueno",
