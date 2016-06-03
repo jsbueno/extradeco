@@ -1,14 +1,14 @@
 
-## NAME
-    extradeco
+## extradeco
 
 ###   parametrized(flat_decorator)
-        A super-flatter decorator decorator!
 
-        One is supposed to decorate what would be your inner "wrapper" function in a decorator with
-        "paramterized". That "wrapper" can now be used as a paramterized decorator with extra parameters
-        whatever parameters it takes when decorating are passed along with the func object when the func itself
-        is called - "*args" and "**kwargs" arguments should be passed down in the call to the original `func`.
+A super-flatter decorator decorator!
+
+One is supposed to decorate what would be your inner "wrapper" function in a decorator with
+"parametrized". That "wrapper" can now be used as a paramterized decorator with extra parameters
+whatever parameters it takes when decorating are passed along with the func object when the func itself
+is called - "*args" and "**kwargs" arguments should be passed down in the call to the original `func`.
 
 ### Example of use:
 
@@ -44,3 +44,7 @@ def soma(a, b):
 def s1(a, b):
     return a + b
 ```
+
+### Warning
+For now, the parameter names in the decorator cannot match any parameter name in the final decorated function.
+It is advised that you prefix the parameter names in the decorator with somethign that won't be present in the decorated functions.
