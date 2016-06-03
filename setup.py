@@ -11,6 +11,7 @@ setup(
     keywords = "decorator utils simplifier",
     url = 'https://github.com/jsbueno/extradeco',
     long_description = open('README.md').read(),
+    test_requites = ["pytest"],
     classifiers = [
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
