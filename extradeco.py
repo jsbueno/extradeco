@@ -6,7 +6,7 @@ def parametrized(flat_decorator):
     A super-flatter decorator decorator!
 
     One is supposed to decorate what would be your inner "wrapper" function in a decorator with
-    "paramterized". That "wrapper" can now be used as a paramterized decorator with extra parameters
+    "paramtrized". That "wrapper" can now be used as a parametrized decorator with extra parameters
     whatever parameters it takes when decorating are passed along with the func object when the func itself
     is called - "*args" and "**kwargs" arguments should be passed down in the call to the original `func`.
 
@@ -51,6 +51,8 @@ def parametrized(flat_decorator):
         return actual_decorator
     return decorator_wrapper
 
+
+"""
 # desired use:
 
 @parametrized
@@ -73,3 +75,6 @@ def soma(a, b):
 @ubberlog(1)
 def s1(a, b):
     return a + b
+
+# Needs more testing- some corner cases are not right.
+"""
