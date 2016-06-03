@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name = 'extradeco',
     py_modules = ["extradeco"],
-    version = "0.1.0",
+    version = "0.1.1",
     license = "LGPLv3+",
     author = "João S. O. Bueno",
     author_email = "gwidion@gmail.com",
