@@ -25,27 +25,33 @@ def parametrized(flat_decorator):
         raise TypeError("Decorators must accept var_positional (*args) and var_keyword(**kwargs) parameters:\n"
             "    these will contain the parameters to be passed to the decorated function at call time")
 
-    minimum_parameters = sum(1 for par in sig.parameters.values() if par.kind not in (P.POSITIONAL_ONLY, P.POSITIONAL_OR_KEYWORD) and par.default is _empty)
-    maximum_parameters =  sum(1 for par in sig.parameters.values() if par.kind not in (P.POSITIONAL_ONLY, P.POSITIONAL_OR_KEYWORD))
+    decorator_parameters = [par for par in sig.parameters.values() if par.kind in (P.POSITIONAL_ONLY, P.POSITIONAL_OR_KEYWORD)]
+
+    minimum_parameters = sum(1 for par in decorator_parameters if par.default is _empty)
+    maximum_parameters =  len(decorator_parameters)
 
     @wraps(flat_decorator)
     def decorator_wrapper(*args, **kwargs):
-        # called at "paramters for the decorator binding time"
+        # called at "parameters for the decorator binding time"
+
         decorator_level_parameters = sig.bind(*((None, ) + args), **kwargs)
+        num_args = len(decorator_level_parameters.args)
         if decorator_level_parameters.kwargs:
             raise TypeError("""Decorator '{}' called with more named parameters than explicit in its signature:\n"
                 "    keyword only args are reserved to be used by calls to the decorated function at runtime""".format(flat_decorator.__name__))
-        if len(decorator_level_parameters.args) < minimum_parameters:
+        if num_args < minimum_parameters:
             raise TypeError("Missing mandatory positional parameters for decorator '{}'".format(flat_decorator.__name__))
-        if len(decorator_level_parameters.args) > maximum_parameters:
+        if num_args > maximum_parameters:
             raise TypeError("More positional parameters than supported for decorator '{}':\n"
                 "Extra positional parameters are to be passed to the decorated function at call time".format(flat_decorator.__name__))
+
+        decorator_defaults = decorator_level_parameters.args[1:] + tuple(par.default  for par in decorator_parameters[num_args: maximum_parameters])
         def actual_decorator(func):
             # called when the parametrized decorator is actually decorating (called with a function as sole parameter)
             @wraps(func)
             def function_wrapper(*args, **kwargs):
                 # called at final-decorated-function call time.
-                final_args = decorator_level_parameters.args[1:] + args
+                final_args =  decorator_defaults + args
                 return flat_decorator(func, *final_args, **kwargs)
             return function_wrapper
         return actual_decorator
