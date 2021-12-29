@@ -58,6 +58,14 @@ def parametrized(flat_decorator):
     return decorator_wrapper
 
 
+def debudeco(func):
+    from functools import wraps
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        import ipdb; ipdb.set_trace()
+        return func(*args, **kwargs)
+    return wrapper
+
 """
 # desired use:
 
@@ -84,3 +92,4 @@ def s1(a, b):
 
 # Needs more testing- some corner cases are not right.
 """
+
