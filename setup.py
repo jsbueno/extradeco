@@ -1,3 +1,5 @@
+from textwrap import dedent as D
+
 from setuptools import setup
 
 setup(
@@ -7,7 +9,32 @@ setup(
     license = "LGPLv3+",
     author = "João S. O. Bueno",
     author_email = "gwidion@gmail.com",
-    description = "Decorator utils. Currently 'paremetrized': a decorator to enable flat decorators: call the wrapped func straight from your decorator body",
+    description = D("""\
+        Decorator utilities
+        ====================
+
+        Currently, just "parametrized" is included. 
+
+
+        paremetrized
+        ------------
+
+        a decorator to enable flat decorators: 
+        Write your decorator with the function to be decorated as first parameter,
+        and it straight from your decorator body:
+
+        ```
+        @extradeco.parametrized
+        def logger(func, *args, **kw):
+            nonlocal f_args
+            f_args = args
+            return func(*args, **kw)
+
+        @logger()
+        def s(a,b):
+            return a + b
+        ```
+        """),
     keywords = "decorator utils simplifier",
     url = 'https://github.com/jsbueno/extradeco',
     long_description = open('README.md').read(),
